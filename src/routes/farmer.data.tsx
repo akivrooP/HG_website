@@ -17,7 +17,7 @@ export const Route = createFileRoute("/farmer/data")({
       { property: "og:description", content: "Keep your sensors and farm unit healthy." },
     ],
   }),
-  component: DataSync;
+  component: DataSync,
 });
 
 function DataSync() {
