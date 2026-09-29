@@ -16,7 +16,10 @@ import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as VetRouteImport } from './routes/vet'
 import { Route as FarmerIndexRouteImport } from './routes/farmer.index'
 import { Route as FarmerAlertsRouteImport } from './routes/farmer.alerts'
+import { Route as FarmerAnalyticsRouteImport } from './routes/farmer.analytics'
+import { Route as FarmerDataRouteImport } from './routes/farmer.data'
 import { Route as FarmerHerdRouteImport } from './routes/farmer.herd'
+import { Route as FarmerMoreRouteImport } from './routes/farmer.more'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -53,9 +56,24 @@ const FarmerAlertsRoute = FarmerAlertsRouteImport.update({
   path: '/alerts',
   getParentRoute: () => FarmerRoute,
 } as any)
+const FarmerAnalyticsRoute = FarmerAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerDataRoute = FarmerDataRouteImport.update({
+  id: '/data',
+  path: '/data',
+  getParentRoute: () => FarmerRoute,
+} as any)
 const FarmerHerdRoute = FarmerHerdRouteImport.update({
   id: '/herd',
   path: '/herd',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerMoreRoute = FarmerMoreRouteImport.update({
+  id: '/more',
+  path: '/more',
   getParentRoute: () => FarmerRoute,
 } as any)
 
@@ -66,7 +84,10 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof OnboardingRoute
   '/vet': typeof VetRoute
   '/farmer/alerts': typeof FarmerAlertsRoute
+  '/farmer/analytics': typeof FarmerAnalyticsRoute
+  '/farmer/data': typeof FarmerDataRoute
   '/farmer/herd': typeof FarmerHerdRoute
+  '/farmer/more': typeof FarmerMoreRoute
   '/farmer/': typeof FarmerIndexRoute
 }
 export interface FileRoutesByTo {
@@ -75,7 +96,10 @@ export interface FileRoutesByTo {
   '/onboarding': typeof OnboardingRoute
   '/vet': typeof VetRoute
   '/farmer/alerts': typeof FarmerAlertsRoute
+  '/farmer/analytics': typeof FarmerAnalyticsRoute
+  '/farmer/data': typeof FarmerDataRoute
   '/farmer/herd': typeof FarmerHerdRoute
+  '/farmer/more': typeof FarmerMoreRoute
   '/farmer': typeof FarmerIndexRoute
 }
 export interface FileRoutesById {
@@ -86,7 +110,10 @@ export interface FileRoutesById {
   '/onboarding': typeof OnboardingRoute
   '/vet': typeof VetRoute
   '/farmer/alerts': typeof FarmerAlertsRoute
+  '/farmer/analytics': typeof FarmerAnalyticsRoute
+  '/farmer/data': typeof FarmerDataRoute
   '/farmer/herd': typeof FarmerHerdRoute
+  '/farmer/more': typeof FarmerMoreRoute
   '/farmer/': typeof FarmerIndexRoute
 }
 export interface FileRouteTypes {
@@ -98,7 +125,10 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/vet'
     | '/farmer/alerts'
+    | '/farmer/analytics'
+    | '/farmer/data'
     | '/farmer/herd'
+    | '/farmer/more'
     | '/farmer/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -107,7 +137,10 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/vet'
     | '/farmer/alerts'
+    | '/farmer/analytics'
+    | '/farmer/data'
     | '/farmer/herd'
+    | '/farmer/more'
     | '/farmer'
   id:
     | '__root__'
@@ -117,7 +150,10 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/vet'
     | '/farmer/alerts'
+    | '/farmer/analytics'
+    | '/farmer/data'
     | '/farmer/herd'
+    | '/farmer/more'
     | '/farmer/'
   fileRoutesById: FileRoutesById
 }
@@ -180,6 +216,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FarmerAlertsRouteImport
       parentRoute: typeof FarmerRoute
     }
+    '/farmer/analytics': {
+      id: '/farmer/analytics'
+      path: '/analytics'
+      fullPath: '/farmer/analytics'
+      preLoaderRoute: typeof FarmerAnalyticsRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/data': {
+      id: '/farmer/data'
+      path: '/data'
+      fullPath: '/farmer/data'
+      preLoaderRoute: typeof FarmerDataRouteImport
+      parentRoute: typeof FarmerRoute
+    }
     '/farmer/herd': {
       id: '/farmer/herd'
       path: '/herd'
@@ -187,18 +237,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FarmerHerdRouteImport
       parentRoute: typeof FarmerRoute
     }
+    '/farmer/more': {
+      id: '/farmer/more'
+      path: '/more'
+      fullPath: '/farmer/more'
+      preLoaderRoute: typeof FarmerMoreRouteImport
+      parentRoute: typeof FarmerRoute
+    }
   }
 }
 
 interface FarmerRouteChildren {
   FarmerAlertsRoute: typeof FarmerAlertsRoute
+  FarmerAnalyticsRoute: typeof FarmerAnalyticsRoute
+  FarmerDataRoute: typeof FarmerDataRoute
   FarmerHerdRoute: typeof FarmerHerdRoute
+  FarmerMoreRoute: typeof FarmerMoreRoute
   FarmerIndexRoute: typeof FarmerIndexRoute
 }
 
 const FarmerRouteChildren: FarmerRouteChildren = {
   FarmerAlertsRoute: FarmerAlertsRoute,
+  FarmerAnalyticsRoute: FarmerAnalyticsRoute,
+  FarmerDataRoute: FarmerDataRoute,
   FarmerHerdRoute: FarmerHerdRoute,
+  FarmerMoreRoute: FarmerMoreRoute,
   FarmerIndexRoute: FarmerIndexRoute,
 }
 
