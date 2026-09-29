@@ -20,6 +20,8 @@ import { Route as FarmerAnalyticsRouteImport } from './routes/farmer.analytics'
 import { Route as FarmerDataRouteImport } from './routes/farmer.data'
 import { Route as FarmerHerdRouteImport } from './routes/farmer.herd'
 import { Route as FarmerMoreRouteImport } from './routes/farmer.more'
+import { Route as FarmerSettingsRouteImport } from './routes/farmer.settings'
+import { Route as FarmerCowIdRouteImport } from './routes/farmer.cow.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -76,6 +78,16 @@ const FarmerMoreRoute = FarmerMoreRouteImport.update({
   path: '/more',
   getParentRoute: () => FarmerRoute,
 } as any)
+const FarmerSettingsRoute = FarmerSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerCowIdRoute = FarmerCowIdRouteImport.update({
+  id: '/cow/$id',
+  path: '/cow/$id',
+  getParentRoute: () => FarmerRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -88,7 +100,9 @@ export interface FileRoutesByFullPath {
   '/farmer/data': typeof FarmerDataRoute
   '/farmer/herd': typeof FarmerHerdRoute
   '/farmer/more': typeof FarmerMoreRoute
+  '/farmer/settings': typeof FarmerSettingsRoute
   '/farmer/': typeof FarmerIndexRoute
+  '/farmer/cow/$id': typeof FarmerCowIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -100,7 +114,9 @@ export interface FileRoutesByTo {
   '/farmer/data': typeof FarmerDataRoute
   '/farmer/herd': typeof FarmerHerdRoute
   '/farmer/more': typeof FarmerMoreRoute
+  '/farmer/settings': typeof FarmerSettingsRoute
   '/farmer': typeof FarmerIndexRoute
+  '/farmer/cow/$id': typeof FarmerCowIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -114,7 +130,9 @@ export interface FileRoutesById {
   '/farmer/data': typeof FarmerDataRoute
   '/farmer/herd': typeof FarmerHerdRoute
   '/farmer/more': typeof FarmerMoreRoute
+  '/farmer/settings': typeof FarmerSettingsRoute
   '/farmer/': typeof FarmerIndexRoute
+  '/farmer/cow/$id': typeof FarmerCowIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -129,7 +147,9 @@ export interface FileRouteTypes {
     | '/farmer/data'
     | '/farmer/herd'
     | '/farmer/more'
+    | '/farmer/settings'
     | '/farmer/'
+    | '/farmer/cow/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -141,7 +161,9 @@ export interface FileRouteTypes {
     | '/farmer/data'
     | '/farmer/herd'
     | '/farmer/more'
+    | '/farmer/settings'
     | '/farmer'
+    | '/farmer/cow/$id'
   id:
     | '__root__'
     | '/'
@@ -154,7 +176,9 @@ export interface FileRouteTypes {
     | '/farmer/data'
     | '/farmer/herd'
     | '/farmer/more'
+    | '/farmer/settings'
     | '/farmer/'
+    | '/farmer/cow/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -244,6 +268,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FarmerMoreRouteImport
       parentRoute: typeof FarmerRoute
     }
+    '/farmer/settings': {
+      id: '/farmer/settings'
+      path: '/settings'
+      fullPath: '/farmer/settings'
+      preLoaderRoute: typeof FarmerSettingsRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/cow/$id': {
+      id: '/farmer/cow/$id'
+      path: '/cow/$id'
+      fullPath: '/farmer/cow/$id'
+      preLoaderRoute: typeof FarmerCowIdRouteImport
+      parentRoute: typeof FarmerRoute
+    }
   }
 }
 
@@ -253,7 +291,9 @@ interface FarmerRouteChildren {
   FarmerDataRoute: typeof FarmerDataRoute
   FarmerHerdRoute: typeof FarmerHerdRoute
   FarmerMoreRoute: typeof FarmerMoreRoute
+  FarmerSettingsRoute: typeof FarmerSettingsRoute
   FarmerIndexRoute: typeof FarmerIndexRoute
+  FarmerCowIdRoute: typeof FarmerCowIdRoute
 }
 
 const FarmerRouteChildren: FarmerRouteChildren = {
@@ -262,7 +302,9 @@ const FarmerRouteChildren: FarmerRouteChildren = {
   FarmerDataRoute: FarmerDataRoute,
   FarmerHerdRoute: FarmerHerdRoute,
   FarmerMoreRoute: FarmerMoreRoute,
+  FarmerSettingsRoute: FarmerSettingsRoute,
   FarmerIndexRoute: FarmerIndexRoute,
+  FarmerCowIdRoute: FarmerCowIdRoute,
 }
 
 const FarmerRouteWithChildren =
