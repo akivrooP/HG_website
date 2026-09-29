@@ -13,7 +13,8 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { HerdProvider } from "../context/HerdContext";
 import { Toaster } from "../components/ui/sonner";
-
+import { DemoExperience } from "../components/DemoExperience";
+import { useHerd } from "../context/HerdContext";
 
 function NotFoundComponent() {
   return (
@@ -136,11 +137,22 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <HerdProvider>
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
+        <RootExperience />
         <Toaster position="top-center" />
       </HerdProvider>
     </QueryClientProvider>
+  );
+}
 
+function RootExperience() {
+  const { darkMode, highContrast, textSize } = useHerd();
+  return (
+    <div
+      className={`${darkMode ? "dark" : ""} ${highContrast ? "high-contrast" : ""} ${textSize === "large" ? "text-large" : textSize === "extra-large" ? "text-extra-large" : ""}`}
+    >
+      <DemoExperience>
+        <Outlet />
+      </DemoExperience>
+    </div>
   );
 }

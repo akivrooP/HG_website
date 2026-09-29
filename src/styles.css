@@ -154,6 +154,16 @@
   }
 }
 
+.text-large {
+  font-size: 112.5%;
+}
+.text-extra-large {
+  font-size: 125%;
+}
+.high-contrast {
+  filter: contrast(1.18);
+}
+
 @utility scan-line {
   animation: scanmove 1.6s ease-in-out infinite;
 }
@@ -167,6 +177,19 @@
   }
   100% {
     transform: translateY(0);
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3px) rotate(-1deg);
+  }
+  75% {
+    transform: translateX(3px) rotate(1deg);
   }
 }
 

@@ -29,12 +29,16 @@ import { RiskBadge } from "@/components/RiskBadge";
 import { SensorTile } from "@/components/SensorTile";
 import { useHerd } from "@/context/HerdContext";
 import { riskColor } from "@/lib/risk";
+import { LiveIndicator } from "@/components/DemoExperience";
 
 export const Route = createFileRoute("/farmer/cow/$id")({
   head: () => ({
     meta: [
       { title: "Cow profile — HerdGuard" },
-      { name: "description", content: "Sensor readings, 14-day mastitis forecast, SCC trend and recommended actions." },
+      {
+        name: "description",
+        content: "Sensor readings, 14-day mastitis forecast, SCC trend and recommended actions.",
+      },
       { property: "og:title", content: "Cow profile — HerdGuard" },
       { property: "og:description", content: "Everything HerdGuard knows about this cow." },
     ],
@@ -80,7 +84,10 @@ function CowProfile() {
 
   return (
     <div className="space-y-4 p-4">
-      <Link to="/farmer/herd" className="inline-flex items-center gap-1 text-sm text-muted-foreground">
+      <Link
+        to="/farmer/herd"
+        className="inline-flex items-center gap-1 text-sm text-muted-foreground"
+      >
         <ArrowLeft className="size-4" /> My herd
       </Link>
 
@@ -104,12 +111,48 @@ function CowProfile() {
         </div>
       </Card>
 
-      <div className="grid grid-cols-2 gap-2">
-        <SensorTile label="Body temperature" value={cow.sensors.bodyTemp} unit="°C" trend={cow.trends.bodyTemp} badIsUp />
-        <SensorTile label="Rumination" value={cow.sensors.rumination} unit="min/day" trend={cow.trends.rumination} badIsUp={false} />
-        <SensorTile label="Activity" value={cow.sensors.activity} unit="steps" trend={cow.trends.activity} badIsUp={false} />
-        <SensorTile label="Milk yield" value={cow.sensors.milkYield} unit="L/day" trend={cow.trends.milkYield} badIsUp={false} />
-        <SensorTile label="Milk conductivity" value={cow.sensors.conductivity} unit="mS/cm" trend={cow.trends.conductivity} badIsUp />
+      <div>
+        <div className="mb-2 flex items-center justify-between">
+          <p className="text-sm font-semibold">Live sensor readings</p>
+          <LiveIndicator />
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          <SensorTile
+            label="Body temperature"
+            value={cow.sensors.bodyTemp}
+            unit="°C"
+            trend={cow.trends.bodyTemp}
+            badIsUp
+          />
+          <SensorTile
+            label="Rumination"
+            value={cow.sensors.rumination}
+            unit="min/day"
+            trend={cow.trends.rumination}
+            badIsUp={false}
+          />
+          <SensorTile
+            label="Activity"
+            value={cow.sensors.activity}
+            unit="steps"
+            trend={cow.trends.activity}
+            badIsUp={false}
+          />
+          <SensorTile
+            label="Milk yield"
+            value={cow.sensors.milkYield}
+            unit="L/day"
+            trend={cow.trends.milkYield}
+            badIsUp={false}
+          />
+          <SensorTile
+            label="Milk conductivity"
+            value={cow.sensors.conductivity}
+            unit="mS/cm"
+            trend={cow.trends.conductivity}
+            badIsUp
+          />
+        </div>
       </div>
 
       <Card className="gap-2 p-4">
@@ -154,7 +197,13 @@ function CowProfile() {
               <XAxis dataKey="month" tick={axis} axisLine={false} tickLine={false} />
               <YAxis tick={axis} axisLine={false} tickLine={false} width={34} />
               <Tooltip />
-              <Line type="monotone" dataKey="scc" stroke="var(--chart-2)" strokeWidth={2.5} dot={{ r: 2 }} />
+              <Line
+                type="monotone"
+                dataKey="scc"
+                stroke="var(--chart-2)"
+                strokeWidth={2.5}
+                dot={{ r: 2 }}
+              />
             </LineChart>
           </ResponsiveContainer>
         </div>

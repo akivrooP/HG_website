@@ -1,7 +1,7 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { Bell, BarChart3, Home, LayoutGrid, MoreHorizontal, ShieldCheck } from "lucide-react";
 import { PhoneFrame } from "@/components/PhoneFrame";
-import { AssistButtons, SwitchRoleButton } from "@/components/TopBar";
+import { AccessibilityButton, AssistButtons, SwitchRoleButton } from "@/components/TopBar";
 import { useHerd } from "@/context/HerdContext";
 import { cn } from "@/lib/utils";
 
@@ -36,6 +36,7 @@ function FarmerLayout() {
               </div>
               <div className="flex items-center gap-1">
                 <AssistButtons />
+                <AccessibilityButton />
                 <SwitchRoleButton />
               </div>
             </header>

@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { AlertTriangle, Info, MessageSquare, Phone, Smartphone, TriangleAlert } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useHerd } from "@/context/HerdContext";
@@ -11,7 +12,10 @@ export const Route = createFileRoute("/farmer/alerts")({
   head: () => ({
     meta: [
       { title: "Alerts — HerdGuard" },
-      { name: "description", content: "Mastitis alerts by severity and channel: app, SMS and voice call." },
+      {
+        name: "description",
+        content: "Mastitis alerts by severity and channel: app, SMS and voice call.",
+      },
       { property: "og:title", content: "Alerts — HerdGuard" },
       { property: "og:description", content: "Critical, warning and info alerts for your herd." },
     ],
@@ -26,7 +30,8 @@ const channelIcon = { App: Smartphone, SMS: MessageSquare, "Voice call": Phone }
 
 function severityStyle(s: Alert["severity"]) {
   if (s === "critical") return { cls: "text-risk-high bg-risk-high/10", Icon: TriangleAlert };
-  if (s === "warning") return { cls: "text-risk-moderate bg-risk-moderate/10", Icon: AlertTriangle };
+  if (s === "warning")
+    return { cls: "text-risk-moderate bg-risk-moderate/10", Icon: AlertTriangle };
   return { cls: "text-primary bg-primary-soft", Icon: Info };
 }
 
@@ -34,6 +39,8 @@ function Alerts() {
   const { alerts, markAlertRead, markAllRead } = useHerd();
   const [channel, setChannel] = useState<(typeof CHANNELS)[number]>("All");
   const [severity, setSeverity] = useState<(typeof SEVERITIES)[number]>("All");
+  const [preview, setPreview] = useState<"SMS" | "Voice call">("SMS");
+  const [sent, setSent] = useState(false);
 
   const list = alerts
     .filter((a) => (channel === "All" ? true : a.channel === channel))
@@ -107,19 +114,74 @@ function Alerts() {
           <p className="py-10 text-center text-sm text-muted-foreground">No alerts here.</p>
         )}
       </div>
+      <Card className="mt-5 overflow-hidden p-4">
+        <p className="text-sm font-semibold">If you have no internet</p>
+        <p className="mt-1 text-xs text-muted-foreground">
+          HerdGuard can still reach you through a basic phone.
+        </p>
+        <div className="mt-3 flex rounded-lg bg-muted p-1">
+          {(["SMS", "Voice call"] as const).map((tab) => (
+            <button
+              key={tab}
+              className={cn(
+                "flex-1 rounded-md px-3 py-1.5 text-xs font-semibold",
+                preview === tab ? "bg-card shadow-sm" : "text-muted-foreground",
+              )}
+              onClick={() => setPreview(tab)}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+        {preview === "SMS" ? (
+          <div
+            className={cn(
+              "mx-auto mt-4 max-w-[210px] rounded-[22px] border-[6px] border-foreground bg-slate-950 p-2 text-white",
+              sent && "animate-[wiggle_0.35s_ease-in-out_3]",
+            )}
+          >
+            <div className="rounded-xl bg-slate-800 p-3">
+              <p className="text-[9px] text-slate-400">HerdGuard · SMS</p>
+              <p className="mt-2 text-[11px] leading-relaxed">
+                {sent
+                  ? "HerdGuard: गौरी गायीला कासदाहाचा उच्च धोका आहे. कृपया आजच पशुवैद्यांना भेटा."
+                  : "Your offline alert will appear here."}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="mx-auto mt-4 max-w-[210px] rounded-[22px] border-[6px] border-foreground bg-slate-950 p-5 text-center text-white">
+            <Phone className="mx-auto size-8 animate-pulse text-risk-low" />
+            <p className="mt-3 text-sm font-bold">Incoming call</p>
+            <p className="mt-1 text-[10px] text-slate-400">HerdGuard voice alert</p>
+            <div className="mt-4 flex h-8 items-center justify-center gap-1">
+              {[3, 8, 14, 6, 11, 4, 16, 7].map((height, index) => (
+                <span
+                  key={index}
+                  className="w-1 animate-pulse rounded-full bg-risk-low"
+                  style={{ height }}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+        <Button
+          className="mt-4 w-full"
+          onClick={() => {
+            setSent(true);
+            toast.success(
+              preview === "SMS" ? "Test alert sent to feature phone" : "Voice call preview started",
+            );
+          }}
+        >
+          <Phone className="size-4" /> Send test alert
+        </Button>
+      </Card>
     </div>
   );
 }
 
-function Chip({
-  label,
-  active,
-  onClick,
-}: {
-  label: string;
-  active: boolean;
-  onClick: () => void;
-}) {
+function Chip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   return (
     <button
       onClick={onClick}
