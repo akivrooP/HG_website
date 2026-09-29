@@ -10,33 +10,183 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CoopRouteImport } from './routes/coop'
+import { Route as FarmerRouteImport } from './routes/farmer'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as VetRouteImport } from './routes/vet'
+import { Route as FarmerIndexRouteImport } from './routes/farmer.index'
+import { Route as FarmerAlertsRouteImport } from './routes/farmer.alerts'
+import { Route as FarmerAnalyticsRouteImport } from './routes/farmer.analytics'
+import { Route as FarmerDataRouteImport } from './routes/farmer.data'
+import { Route as FarmerHerdRouteImport } from './routes/farmer.herd'
+import { Route as FarmerMoreRouteImport } from './routes/farmer.more'
+import { Route as FarmerSettingsRouteImport } from './routes/farmer.settings'
+import { Route as FarmerCowIdRouteImport } from './routes/farmer.cow.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CoopRoute = CoopRouteImport.update({
+  id: '/coop',
+  path: '/coop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FarmerRoute = FarmerRouteImport.update({
+  id: '/farmer',
+  path: '/farmer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VetRoute = VetRouteImport.update({
+  id: '/vet',
+  path: '/vet',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FarmerIndexRoute = FarmerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerAlertsRoute = FarmerAlertsRouteImport.update({
+  id: '/alerts',
+  path: '/alerts',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerAnalyticsRoute = FarmerAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerDataRoute = FarmerDataRouteImport.update({
+  id: '/data',
+  path: '/data',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerHerdRoute = FarmerHerdRouteImport.update({
+  id: '/herd',
+  path: '/herd',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerMoreRoute = FarmerMoreRouteImport.update({
+  id: '/more',
+  path: '/more',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerSettingsRoute = FarmerSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerCowIdRoute = FarmerCowIdRouteImport.update({
+  id: '/cow/$id',
+  path: '/cow/$id',
+  getParentRoute: () => FarmerRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/coop': typeof CoopRoute
+  '/farmer': typeof FarmerRouteWithChildren
+  '/onboarding': typeof OnboardingRoute
+  '/vet': typeof VetRoute
+  '/farmer/alerts': typeof FarmerAlertsRoute
+  '/farmer/analytics': typeof FarmerAnalyticsRoute
+  '/farmer/data': typeof FarmerDataRoute
+  '/farmer/herd': typeof FarmerHerdRoute
+  '/farmer/more': typeof FarmerMoreRoute
+  '/farmer/settings': typeof FarmerSettingsRoute
+  '/farmer/': typeof FarmerIndexRoute
+  '/farmer/cow/$id': typeof FarmerCowIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/coop': typeof CoopRoute
+  '/onboarding': typeof OnboardingRoute
+  '/vet': typeof VetRoute
+  '/farmer/alerts': typeof FarmerAlertsRoute
+  '/farmer/analytics': typeof FarmerAnalyticsRoute
+  '/farmer/data': typeof FarmerDataRoute
+  '/farmer/herd': typeof FarmerHerdRoute
+  '/farmer/more': typeof FarmerMoreRoute
+  '/farmer/settings': typeof FarmerSettingsRoute
+  '/farmer': typeof FarmerIndexRoute
+  '/farmer/cow/$id': typeof FarmerCowIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/coop': typeof CoopRoute
+  '/farmer': typeof FarmerRouteWithChildren
+  '/onboarding': typeof OnboardingRoute
+  '/vet': typeof VetRoute
+  '/farmer/alerts': typeof FarmerAlertsRoute
+  '/farmer/analytics': typeof FarmerAnalyticsRoute
+  '/farmer/data': typeof FarmerDataRoute
+  '/farmer/herd': typeof FarmerHerdRoute
+  '/farmer/more': typeof FarmerMoreRoute
+  '/farmer/settings': typeof FarmerSettingsRoute
+  '/farmer/': typeof FarmerIndexRoute
+  '/farmer/cow/$id': typeof FarmerCowIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/coop'
+    | '/farmer'
+    | '/onboarding'
+    | '/vet'
+    | '/farmer/alerts'
+    | '/farmer/analytics'
+    | '/farmer/data'
+    | '/farmer/herd'
+    | '/farmer/more'
+    | '/farmer/settings'
+    | '/farmer/'
+    | '/farmer/cow/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/coop'
+    | '/onboarding'
+    | '/vet'
+    | '/farmer/alerts'
+    | '/farmer/analytics'
+    | '/farmer/data'
+    | '/farmer/herd'
+    | '/farmer/more'
+    | '/farmer/settings'
+    | '/farmer'
+    | '/farmer/cow/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/coop'
+    | '/farmer'
+    | '/onboarding'
+    | '/vet'
+    | '/farmer/alerts'
+    | '/farmer/analytics'
+    | '/farmer/data'
+    | '/farmer/herd'
+    | '/farmer/more'
+    | '/farmer/settings'
+    | '/farmer/'
+    | '/farmer/cow/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CoopRoute: typeof CoopRoute
+  FarmerRoute: typeof FarmerRouteWithChildren
+  OnboardingRoute: typeof OnboardingRoute
+  VetRoute: typeof VetRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +198,124 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/coop': {
+      id: '/coop'
+      path: '/coop'
+      fullPath: '/coop'
+      preLoaderRoute: typeof CoopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/farmer': {
+      id: '/farmer'
+      path: '/farmer'
+      fullPath: '/farmer'
+      preLoaderRoute: typeof FarmerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vet': {
+      id: '/vet'
+      path: '/vet'
+      fullPath: '/vet'
+      preLoaderRoute: typeof VetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/farmer/': {
+      id: '/farmer/'
+      path: '/'
+      fullPath: '/farmer/'
+      preLoaderRoute: typeof FarmerIndexRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/alerts': {
+      id: '/farmer/alerts'
+      path: '/alerts'
+      fullPath: '/farmer/alerts'
+      preLoaderRoute: typeof FarmerAlertsRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/analytics': {
+      id: '/farmer/analytics'
+      path: '/analytics'
+      fullPath: '/farmer/analytics'
+      preLoaderRoute: typeof FarmerAnalyticsRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/data': {
+      id: '/farmer/data'
+      path: '/data'
+      fullPath: '/farmer/data'
+      preLoaderRoute: typeof FarmerDataRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/herd': {
+      id: '/farmer/herd'
+      path: '/herd'
+      fullPath: '/farmer/herd'
+      preLoaderRoute: typeof FarmerHerdRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/more': {
+      id: '/farmer/more'
+      path: '/more'
+      fullPath: '/farmer/more'
+      preLoaderRoute: typeof FarmerMoreRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/settings': {
+      id: '/farmer/settings'
+      path: '/settings'
+      fullPath: '/farmer/settings'
+      preLoaderRoute: typeof FarmerSettingsRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/cow/$id': {
+      id: '/farmer/cow/$id'
+      path: '/cow/$id'
+      fullPath: '/farmer/cow/$id'
+      preLoaderRoute: typeof FarmerCowIdRouteImport
+      parentRoute: typeof FarmerRoute
+    }
   }
 }
 
+interface FarmerRouteChildren {
+  FarmerAlertsRoute: typeof FarmerAlertsRoute
+  FarmerAnalyticsRoute: typeof FarmerAnalyticsRoute
+  FarmerDataRoute: typeof FarmerDataRoute
+  FarmerHerdRoute: typeof FarmerHerdRoute
+  FarmerMoreRoute: typeof FarmerMoreRoute
+  FarmerSettingsRoute: typeof FarmerSettingsRoute
+  FarmerIndexRoute: typeof FarmerIndexRoute
+  FarmerCowIdRoute: typeof FarmerCowIdRoute
+}
+
+const FarmerRouteChildren: FarmerRouteChildren = {
+  FarmerAlertsRoute: FarmerAlertsRoute,
+  FarmerAnalyticsRoute: FarmerAnalyticsRoute,
+  FarmerDataRoute: FarmerDataRoute,
+  FarmerHerdRoute: FarmerHerdRoute,
+  FarmerMoreRoute: FarmerMoreRoute,
+  FarmerSettingsRoute: FarmerSettingsRoute,
+  FarmerIndexRoute: FarmerIndexRoute,
+  FarmerCowIdRoute: FarmerCowIdRoute,
+}
+
+const FarmerRouteWithChildren =
+  FarmerRoute._addFileChildren(FarmerRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CoopRoute: CoopRoute,
+  FarmerRoute: FarmerRouteWithChildren,
+  OnboardingRoute: OnboardingRoute,
+  VetRoute: VetRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
