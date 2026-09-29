@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CoopRouteImport } from './routes/coop'
+import { Route as FarmerRouteImport } from './routes/farmer'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as VetRouteImport } from './routes/vet'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const CoopRoute = CoopRouteImport.update({
   id: '/coop',
   path: '/coop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FarmerRoute = FarmerRouteImport.update({
+  id: '/farmer',
+  path: '/farmer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingRoute = OnboardingRouteImport.update({
@@ -38,12 +44,14 @@ const VetRoute = VetRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/coop': typeof CoopRoute
+  '/farmer': typeof FarmerRoute
   '/onboarding': typeof OnboardingRoute
   '/vet': typeof VetRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/coop': typeof CoopRoute
+  '/farmer': typeof FarmerRoute
   '/onboarding': typeof OnboardingRoute
   '/vet': typeof VetRoute
 }
@@ -51,20 +59,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/coop': typeof CoopRoute
+  '/farmer': typeof FarmerRoute
   '/onboarding': typeof OnboardingRoute
   '/vet': typeof VetRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/coop' | '/onboarding' | '/vet'
+  fullPaths: '/' | '/coop' | '/farmer' | '/onboarding' | '/vet'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/coop' | '/onboarding' | '/vet'
-  id: '__root__' | '/' | '/coop' | '/onboarding' | '/vet'
+  to: '/' | '/coop' | '/farmer' | '/onboarding' | '/vet'
+  id: '__root__' | '/' | '/coop' | '/farmer' | '/onboarding' | '/vet'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CoopRoute: typeof CoopRoute
+  FarmerRoute: typeof FarmerRoute
   OnboardingRoute: typeof OnboardingRoute
   VetRoute: typeof VetRoute
 }
@@ -83,6 +93,13 @@ declare module '@tanstack/react-router' {
       path: '/coop'
       fullPath: '/coop'
       preLoaderRoute: typeof CoopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/farmer': {
+      id: '/farmer'
+      path: '/farmer'
+      fullPath: '/farmer'
+      preLoaderRoute: typeof FarmerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding': {
@@ -105,6 +122,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CoopRoute: CoopRoute,
+  FarmerRoute: FarmerRoute,
   OnboardingRoute: OnboardingRoute,
   VetRoute: VetRoute,
 }
