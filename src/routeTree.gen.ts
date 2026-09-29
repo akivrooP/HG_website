@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CoopRouteImport } from './routes/coop'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as VetRouteImport } from './routes/vet'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CoopRoute = CoopRouteImport.update({
+  id: '/coop',
+  path: '/coop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VetRoute = VetRouteImport.update({
+  id: '/vet',
+  path: '/vet',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/coop': typeof CoopRoute
+  '/onboarding': typeof OnboardingRoute
+  '/vet': typeof VetRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/coop': typeof CoopRoute
+  '/onboarding': typeof OnboardingRoute
+  '/vet': typeof VetRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/coop': typeof CoopRoute
+  '/onboarding': typeof OnboardingRoute
+  '/vet': typeof VetRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/coop' | '/onboarding' | '/vet'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/coop' | '/onboarding' | '/vet'
+  id: '__root__' | '/' | '/coop' | '/onboarding' | '/vet'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CoopRoute: typeof CoopRoute
+  OnboardingRoute: typeof OnboardingRoute
+  VetRoute: typeof VetRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/coop': {
+      id: '/coop'
+      path: '/coop'
+      fullPath: '/coop'
+      preLoaderRoute: typeof CoopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vet': {
+      id: '/vet'
+      path: '/vet'
+      fullPath: '/vet'
+      preLoaderRoute: typeof VetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CoopRoute: CoopRoute,
+  OnboardingRoute: OnboardingRoute,
+  VetRoute: VetRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
