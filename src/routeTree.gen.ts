@@ -14,6 +14,9 @@ import { Route as CoopRouteImport } from './routes/coop'
 import { Route as FarmerRouteImport } from './routes/farmer'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as VetRouteImport } from './routes/vet'
+import { Route as FarmerIndexRouteImport } from './routes/farmer.index'
+import { Route as FarmerAlertsRouteImport } from './routes/farmer.alerts'
+import { Route as FarmerHerdRouteImport } from './routes/farmer.herd'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,41 +43,88 @@ const VetRoute = VetRouteImport.update({
   path: '/vet',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FarmerIndexRoute = FarmerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerAlertsRoute = FarmerAlertsRouteImport.update({
+  id: '/alerts',
+  path: '/alerts',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerHerdRoute = FarmerHerdRouteImport.update({
+  id: '/herd',
+  path: '/herd',
+  getParentRoute: () => FarmerRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/coop': typeof CoopRoute
-  '/farmer': typeof FarmerRoute
+  '/farmer': typeof FarmerRouteWithChildren
   '/onboarding': typeof OnboardingRoute
   '/vet': typeof VetRoute
+  '/farmer/alerts': typeof FarmerAlertsRoute
+  '/farmer/herd': typeof FarmerHerdRoute
+  '/farmer/': typeof FarmerIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/coop': typeof CoopRoute
-  '/farmer': typeof FarmerRoute
   '/onboarding': typeof OnboardingRoute
   '/vet': typeof VetRoute
+  '/farmer/alerts': typeof FarmerAlertsRoute
+  '/farmer/herd': typeof FarmerHerdRoute
+  '/farmer': typeof FarmerIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/coop': typeof CoopRoute
-  '/farmer': typeof FarmerRoute
+  '/farmer': typeof FarmerRouteWithChildren
   '/onboarding': typeof OnboardingRoute
   '/vet': typeof VetRoute
+  '/farmer/alerts': typeof FarmerAlertsRoute
+  '/farmer/herd': typeof FarmerHerdRoute
+  '/farmer/': typeof FarmerIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/coop' | '/farmer' | '/onboarding' | '/vet'
+  fullPaths:
+    | '/'
+    | '/coop'
+    | '/farmer'
+    | '/onboarding'
+    | '/vet'
+    | '/farmer/alerts'
+    | '/farmer/herd'
+    | '/farmer/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/coop' | '/farmer' | '/onboarding' | '/vet'
-  id: '__root__' | '/' | '/coop' | '/farmer' | '/onboarding' | '/vet'
+  to:
+    | '/'
+    | '/coop'
+    | '/onboarding'
+    | '/vet'
+    | '/farmer/alerts'
+    | '/farmer/herd'
+    | '/farmer'
+  id:
+    | '__root__'
+    | '/'
+    | '/coop'
+    | '/farmer'
+    | '/onboarding'
+    | '/vet'
+    | '/farmer/alerts'
+    | '/farmer/herd'
+    | '/farmer/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CoopRoute: typeof CoopRoute
-  FarmerRoute: typeof FarmerRoute
+  FarmerRoute: typeof FarmerRouteWithChildren
   OnboardingRoute: typeof OnboardingRoute
   VetRoute: typeof VetRoute
 }
@@ -116,13 +166,49 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VetRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/farmer/': {
+      id: '/farmer/'
+      path: '/'
+      fullPath: '/farmer/'
+      preLoaderRoute: typeof FarmerIndexRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/alerts': {
+      id: '/farmer/alerts'
+      path: '/alerts'
+      fullPath: '/farmer/alerts'
+      preLoaderRoute: typeof FarmerAlertsRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/herd': {
+      id: '/farmer/herd'
+      path: '/herd'
+      fullPath: '/farmer/herd'
+      preLoaderRoute: typeof FarmerHerdRouteImport
+      parentRoute: typeof FarmerRoute
+    }
   }
 }
+
+interface FarmerRouteChildren {
+  FarmerAlertsRoute: typeof FarmerAlertsRoute
+  FarmerHerdRoute: typeof FarmerHerdRoute
+  FarmerIndexRoute: typeof FarmerIndexRoute
+}
+
+const FarmerRouteChildren: FarmerRouteChildren = {
+  FarmerAlertsRoute: FarmerAlertsRoute,
+  FarmerHerdRoute: FarmerHerdRoute,
+  FarmerIndexRoute: FarmerIndexRoute,
+}
+
+const FarmerRouteWithChildren =
+  FarmerRoute._addFileChildren(FarmerRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CoopRoute: CoopRoute,
-  FarmerRoute: FarmerRoute,
+  FarmerRoute: FarmerRouteWithChildren,
   OnboardingRoute: OnboardingRoute,
   VetRoute: VetRoute,
 }
