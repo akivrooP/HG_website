@@ -29,7 +29,7 @@ function Onboarding() {
   const [scanning, setScanning] = useState(false);
   const [scanned, setScanned] = useState(false);
 
-  const sample = cows[0];
+  const sample = cows[0]!;
 
   useEffect(() => {
     if (!scanning) return;

@@ -13,7 +13,7 @@ function mulberry32(seed: number) {
 }
 
 const rand = mulberry32(20260929);
-const pick = <T,>(arr: T[]) => arr[Math.floor(rand() * arr.length)];
+const pick = <T,>(arr: T[]) => arr[Math.floor(rand() * arr.length)]!;
 const between = (min: number, max: number, dp = 1) =>
   Number((min + rand() * (max - min)).toFixed(dp));
 
@@ -33,8 +33,8 @@ export type TreatmentRecord = {
   date: string;
   type: string;
   note: string;
-  scc?: number;
-  cmt?: string;
+  scc?: number | undefined;
+  cmt?: string | undefined;
 };
 
 export type Cow = {
@@ -239,7 +239,7 @@ function makeHistory(level: RiskLevel, idx: number): TreatmentRecord[] {
 function makeCow(idx: number, level: RiskLevel): Cow {
   const score = scoreFor(level);
   const sick = level === "High" || level === "Moderate";
-  const name = NAMES[idx % NAMES.length];
+  const name = NAMES[idx % NAMES.length]!;
   return {
     id: String(Math.floor(100000000000 + rand() * 899999999999)),
     name: idx >= NAMES.length ? `${name} ${Math.floor(idx / NAMES.length) + 1}` : name,
@@ -327,7 +327,7 @@ const attentionCows = [...cows]
   .slice(0, 15);
 
 export const alerts: Alert[] = ALERT_TEMPLATES.map((t, i) => {
-  const cow = attentionCows[i % attentionCows.length];
+  const cow = attentionCows[i % attentionCows.length]!;
   return {
     id: `a-${i + 1}`,
     severity: t.severity,
@@ -335,7 +335,7 @@ export const alerts: Alert[] = ALERT_TEMPLATES.map((t, i) => {
     cowId: cow.id,
     cowName: cow.name,
     message: t.message,
-    time: TIMES[i],
+    time: TIMES[i]!,
     read: i > 6,
   };
 });
@@ -452,8 +452,8 @@ export const memberFarms: MemberFarm[] = Array.from({ length: 40 }, (_, i) => {
     r > 0.9 ? "High" : r > 0.75 ? "Moderate" : r > 0.5 ? "Low" : "No risk";
   return {
     id: `mf-${i + 1}`,
-    name: `${VILLAGES[i % VILLAGES.length]} Dairy ${Math.floor(i / VILLAGES.length) + 1}`,
-    village: VILLAGES[i % VILLAGES.length],
+    name: `${VILLAGES[i % VILLAGES.length]!} Dairy ${Math.floor(i / VILLAGES.length) + 1}`,
+    village: VILLAGES[i % VILLAGES.length]!,
     lat: Number((17.68 + between(-0.35, 0.35, 3)).toFixed(3)),
     lng: Number((74.02 + between(-0.4, 0.4, 3)).toFixed(3)),
     animals: Math.round(between(45, 190, 0)),
