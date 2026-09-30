@@ -113,7 +113,7 @@ SHAP Explanation
        ↓
 Farmer / Veterinary Decision Support
 
-**## Procedure to run the website **
+## Procedure to run the website 
 
 Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
 
